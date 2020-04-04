@@ -1,0 +1,54 @@
+    /////////////////////////////////////////////////////////////////
+   //             ESP32 2.9" E-PAPER EXAMPLE             v1.00    //
+  //       Get the latest version of the code here:              //
+ //        https://educ8s.tv/2-9-e-paper-display                //
+/////////////////////////////////////////////////////////////////
+
+#include <GxEPD.h>
+#include <GxGDEH029A1/GxGDEH029A1.h>      // 2.9" b/w
+#include <GxIO/GxIO_SPI/GxIO_SPI.h>
+#include <GxIO/GxIO.h>
+#include "BitmapGraphics.h"
+#include <Fonts/FreeSansBold24pt7b.h>
+
+
+GxIO_Class io(SPI, SS, 22, 21); 
+GxEPD_Class display(io, 16, 4); 
+
+const char* name = "FreeSansBold24pt7b";
+const GFXfont* f = &FreeSansBold24pt7b;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Starting...");
+  display.init();
+  display.setRotation(1);
+  display.fillScreen(GxEPD_WHITE);
+  display.update();
+  display.setTextColor(GxEPD_BLACK);
+  display.setFont(f);
+  display.setCursor(50, 15);
+  display.println(" Reality can be ...");
+  display.println();
+  delay(2500);
+  display.fillScreen(GxEPD_WHITE);
+  display.update();
+  display.setCursor(50, 15);
+  display.println("... whatever I want");
+  display.update();
+  delay(2500);
+  display.setRotation(0);
+
+}
+  
+
+void loop() {
+  
+  display.drawExampleBitmap(gImage_thanos, 0, 0, GxEPD_WIDTH,GxEPD_HEIGHT, GxEPD_BLACK);
+  display.update();
+  delay(10000);
+  display.drawExampleBitmap(gImage_hackerman_2, 0, 0, GxEPD_WIDTH,GxEPD_HEIGHT, GxEPD_BLACK);
+  display.update();
+  delay(10000);
+  
+}
